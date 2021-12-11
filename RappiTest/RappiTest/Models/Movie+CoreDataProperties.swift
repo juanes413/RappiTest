@@ -18,10 +18,12 @@ extension Movie {
 
     @NSManaged public var id: Int32
     @NSManaged public var title: String?
-    @NSManaged public var vote_average: Double
+    @NSManaged public var voteAverage: Double
     @NSManaged public var overview: String?
     @NSManaged public var type: Int16
     @NSManaged public var posterPath: String?
+    @NSManaged public var releaseDate: String?
+    @NSManaged public var backdropPath: String?
 
 }
 

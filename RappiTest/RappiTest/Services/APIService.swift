@@ -10,7 +10,7 @@ class APIService {
     
     static let baseUrl = "https://api.themoviedb.org/3/movie/"
     static let apiKey = "/?language=es-ES&api_key=b4d9dac06b1d32ac32c940bf4d4ff55a"
-    static let baseUrlImage = "https://image.tmdb.org/t/p/w500"
+    static let baseUrlImage = "https://image.tmdb.org/t/p/original"
     
     private let session: URLSession
     

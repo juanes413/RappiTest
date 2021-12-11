@@ -14,7 +14,15 @@ class MovieUICollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        contentView.layer.cornerRadius = 8
+    
+        contentView.layer.cornerRadius = 8.0
+        contentView.layer.borderColor  =  UIColor.gray.cgColor
+        contentView.layer.borderWidth = 0.1
+        contentView.layer.shadowOpacity = 0.2
+        contentView.layer.shadowColor =  UIColor.gray.cgColor
+        contentView.layer.shadowRadius = 2.0
+        contentView.layer.shadowOffset = CGSize(width:0.0, height: 0.0)
+        contentView.layer.masksToBounds = true
     }
     
 }

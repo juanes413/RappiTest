@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WHn-fE-QkJ">
-                                <rect key="frame" x="0.0" y="144" width="414" height="664"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="716"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GC0-9A-xi0">
                                     <size key="itemSize" width="178" height="356"/>
@@ -53,7 +53,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="651-sh-UuV" firstAttribute="top" secondItem="1sV-HC-Zcg" secondAttribute="top" id="3ku-WR-0Pl"/>
                                                 <constraint firstItem="AWP-pD-g7v" firstAttribute="top" secondItem="uRg-Jq-Qym" secondAttribute="bottom" constant="4" id="8cZ-a9-Nz9"/>
@@ -109,6 +109,48 @@
             </objects>
             <point key="canvasLocation" x="944.92753623188412" y="83.705357142857139"/>
         </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="8m2-ug-dpZ">
+            <objects>
+                <viewController storyboardIdentifier="detailViewController" id="x5C-U4-mvF" customClass="DetailViewController" customModule="RappiTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="74a-RL-J0T">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KFu-TQ-EmP">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="512"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="512" id="5GP-3e-Nep"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wf6-Kp-7x1">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="512"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.19637990787329268" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="512" id="0mM-mC-grc"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="qab-tf-Px0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="KFu-TQ-EmP" firstAttribute="leading" secondItem="74a-RL-J0T" secondAttribute="leading" id="31M-rf-Wq6"/>
+                            <constraint firstItem="KFu-TQ-EmP" firstAttribute="top" secondItem="74a-RL-J0T" secondAttribute="top" id="4FY-gA-KHi"/>
+                            <constraint firstItem="wf6-Kp-7x1" firstAttribute="top" secondItem="74a-RL-J0T" secondAttribute="top" id="9UC-H2-ryI"/>
+                            <constraint firstAttribute="trailing" secondItem="wf6-Kp-7x1" secondAttribute="trailing" id="NXd-WU-6d7"/>
+                            <constraint firstItem="wf6-Kp-7x1" firstAttribute="leading" secondItem="74a-RL-J0T" secondAttribute="leading" id="SZe-AI-byc"/>
+                            <constraint firstAttribute="trailing" secondItem="KFu-TQ-EmP" secondAttribute="trailing" id="xOf-mB-siN"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="imageView" destination="KFu-TQ-EmP" id="GlP-gv-ykV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GPh-5o-OyL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1831.8840579710147" y="83.705357142857139"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="4IW-hI-rH1">
             <objects>
@@ -117,7 +159,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="yx9-YG-Kkz">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <navigationBarAppearance key="scrollEdgeAppearance"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

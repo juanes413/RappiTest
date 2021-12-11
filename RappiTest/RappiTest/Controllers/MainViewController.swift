@@ -13,42 +13,60 @@ class MainViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var uiTabBar: UITabBar!
     
-    private var mValues = [MovieItem]()
-    private var mValuesFiltered = [MovieItem]()
-    
-    private let searchController = UISearchController(searchResultsController: nil)
-    
     private enum ReuseIdentifiers: String {
         case movieItemUITableViewCell
     }
     
-    private var typeCategory: TypeCategory = .popular
-    
-    private lazy var viewModelMovie = {
-        MovieViewModel(viewModelToViewBinding: self)
-    }()
-    
     private var contentWidth: CGFloat {
         return (collectionView.bounds.width/2)-17
     }
+
+    private let searchController = UISearchController(searchResultsController: nil)
     
+    private var typeCategory: TypeCategory = .popular
+    private let databaseManager = DataBaseManager()
+    
+    private var mValues = [MovieItem]()
+    private var mValuesFiltered = [MovieItem]()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         /*
-        mValuesFiltered.append(MovieItem(adult: false, backdropPath: "", genreIDS: [], id: 0, originalTitle: "", overview: "", popularity: 0.0, posterPath: "/2jVVDtDaeMxmcvrz2SNyhMcYtWc.jpg", releaseDate: "2021-12-01", title: "Encanto", video: false, voteAverage: 0.0, voteCount: 0))
-        
-        mValuesFiltered.append(MovieItem(adult: false, backdropPath: "", genreIDS: [], id: 0, originalTitle: "", overview: "", popularity: 0.0, posterPath: "/odBUpjZGxY3y7FBo5NBtEYGJf5r.jpg", releaseDate: "2021-12-01", title: "Spiderman no way home", video: false, voteAverage: 0.0, voteCount: 0))
-        
-        */
+         mValuesFiltered.append(MovieItem(adult: false, backdropPath: "", genreIDS: [], id: 0, originalTitle: "", overview: "", popularity: 0.0, posterPath: "/2jVVDtDaeMxmcvrz2SNyhMcYtWc.jpg", releaseDate: "2021-12-01", title: "Encanto", video: false, voteAverage: 0.0, voteCount: 0))
+         
+         mValuesFiltered.append(MovieItem(adult: false, backdropPath: "", genreIDS: [], id: 0, originalTitle: "", overview: "", popularity: 0.0, posterPath: "/odBUpjZGxY3y7FBo5NBtEYGJf5r.jpg", releaseDate: "2021-12-01", title: "Spiderman no way home", video: false, voteAverage: 0.0, voteCount: 0))
+         
+         */
         self.configureSearchBar()
         self.configureCollectionViewAndTabBar()
-        
-        viewModelMovie.loadMoviesFromService(typeCategory: typeCategory)
+        self.loadData()
     }
     
-    private func changeTitle() {
-        self.navigationItem.title = typeCategory.name
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.barStyle = .default
+        self.navigationController?.navigationBar.tintColor = .black
+    }
+    
+    private func openDetail(movieItem: MovieItem) {
+        if let destination = self.storyboard?.instantiateViewController(withIdentifier: "detailViewController") as? DetailViewController {
+            destination.movieItem = movieItem
+            destination.providesPresentationContextTransitionStyle = true
+            destination.definesPresentationContext = true
+            destination.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(destination, animated: true)
+        }
+    }
+    
+    private func loadData() {
+        DispatchQueue.main.async {
+            self.databaseManager.saveMovieToDb(typeCategory: self.typeCategory, completionBlock: {
+                self.mValues = self.databaseManager.loadMoviesFromDb(typeCategory: self.typeCategory)
+                self.mValuesFiltered = self.mValues
+                self.reloadData()
+            })
+        }
     }
     
 }
@@ -58,7 +76,8 @@ extension MainViewController: UITabBarDelegate {
     public func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let tab = item.tag
         if tab != typeCategory.rawValue {
-            typeCategory = TypeCategory(rawValue: tab)!
+            self.typeCategory = TypeCategory(rawValue: tab)!
+            self.loadData()
             self.changeTitle()
         }
     }
@@ -88,7 +107,7 @@ extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate {
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: contentWidth, height: contentWidth*2)
+        return CGSize(width: contentWidth, height: 356)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -114,7 +133,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let item = mValuesFiltered[indexPath.row]
+        openDetail(movieItem: item)
     }
 }
 // MARK: - UI
@@ -150,25 +170,15 @@ extension MainViewController {
         self.uiTabBar.selectedItem = uiTabBar.items?.first
     }
     
+    private func changeTitle() {
+        self.navigationItem.title = typeCategory.name
+    }
+    
     //Refrescar informacion
     private func reloadData() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
-    }
-    
-}
-// MARK: - ViewModel
-extension MainViewController: MovieViewModelToViewBinding {
-    
-    func serviceMovieResult(typeCategory: TypeCategory, results: [MovieItem]) {
-        self.mValues = results
-        self.mValuesFiltered = self.mValues
-        self.reloadData()
-    }
-    
-    func serviceError() {
-        print("error")
     }
     
 }
