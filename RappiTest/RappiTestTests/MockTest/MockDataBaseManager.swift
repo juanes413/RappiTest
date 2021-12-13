@@ -1,34 +1,33 @@
 //
-//  DataStore.swift
-//  RappiTest
+//  MockSearchViewModel.swift
+//  Test MLTests
 //
-//  Created by Juan Esteban Pelaez on 11/12/21.
+//  Created by Juan Esteban Pelaez on 17/11/21.
 //
 
 import Foundation
 import CoreData
+@testable import RappiTest
 
-class DataBaseManager: NSObject {
+class MockDataBaseManager: DataBaseManager {
     
-    var apiServices: APIService
-    var coreDataManager: CoreDataUtil
-    
-    init (apiServices: APIService = APIService(), coreDataManager: CoreDataUtil = CoreDataUtil.shared()) {
-        self.apiServices = apiServices
-        self.coreDataManager = coreDataManager
+    override init (apiServices: APIService = APIService(), coreDataManager: CoreDataUtil = CoreDataUtil.shared()) {
+        super.init(apiServices: apiServices, coreDataManager: coreDataManager)
     }
     
-    func saveMovieToDb(typeCategory: TypeCategory, completionBlock : @escaping ()->()) {
-        apiServices.downloadMovies(typeCategory: typeCategory, completion: { [weak self] success, model in
-            if success, let movies = model {
-                self?.deleteMoviesFromDb(typeCategory: typeCategory)
-                self?.coreDataManager.prepare(typeCategory: typeCategory, dataForSaving: movies.results)
-            }
-            completionBlock()
-        })
+    override func saveMovieToDb(typeCategory: TypeCategory, completionBlock : @escaping ()->()) {
+        
+        var movies = [MovieItem]()
+        movies.append(MovieItem(backdropPath: "", id: 0, overview: "Description", posterPath: "/2jVVDtDaeMxmcvrz2SNyhMcYtWc.jpg", releaseDate: "2021-12-01", title: "Encanto", voteAverage: 5.5)!)
+        
+        movies.append(MovieItem(backdropPath: "", id: 2, overview: "Description", posterPath: "/odBUpjZGxY3y7FBo5NBtEYGJf5r.jpg", releaseDate: "2021-12-01", title: "Spiderman no way home", voteAverage: 8.5)!)
+        
+        self.deleteMoviesFromDb(typeCategory: typeCategory)
+        self.coreDataManager.prepare(typeCategory: typeCategory, dataForSaving: movies)
+        completionBlock()
     }
     
-    func deleteMoviesFromDb(typeCategory: TypeCategory) {
+    override func deleteMoviesFromDb(typeCategory: TypeCategory) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult>
         fetchRequest = NSFetchRequest(entityName: "Movie")
         
@@ -45,7 +44,7 @@ class DataBaseManager: NSObject {
         }
     }
     
-    func loadMoviesFromDb(typeCategory: TypeCategory) -> [MovieItem] {
+    override func loadMoviesFromDb(typeCategory: TypeCategory) -> [MovieItem] {
         let fetchRequest = Movie.fetchRequest()
         let predicate = NSPredicate(format: "type == %@", String(typeCategory.rawValue))
         fetchRequest.predicate = predicate
@@ -67,3 +66,4 @@ class DataBaseManager: NSObject {
     }
     
 }
+

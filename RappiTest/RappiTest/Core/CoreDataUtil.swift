@@ -14,6 +14,18 @@ class CoreDataUtil: NSObject {
     
     private override init() {}
     
+    private let dateFormatterOutput: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter
+    }()
+    
+    private let dateFormatterInput: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+    
     // Create a shared Instance
     static let _shared = CoreDataUtil()
     
@@ -63,6 +75,13 @@ class CoreDataUtil: NSObject {
     private func createEntityFrom(typeCategory: TypeCategory, movieItem: MovieItem) -> Movie {
         
         // Convert
+        
+        var date = Date()
+        if let dateF = dateFormatterInput.date(from: movieItem.releaseDate) {
+            date = dateF
+        }
+        let dateFormatter = dateFormatterOutput.string(from: date)
+        
         let movie = Movie(context: self.managedObjectContext)
         movie.type = Int16(typeCategory.rawValue)
         movie.id = movieItem.id
@@ -70,7 +89,7 @@ class CoreDataUtil: NSObject {
         movie.posterPath = movieItem.posterPath
         movie.overview = movieItem.overview
         movie.voteAverage = movieItem.voteAverage
-        movie.releaseDate = movieItem.releaseDate
+        movie.releaseDate = dateFormatter
         movie.backdropPath = movieItem.backdropPath
         
         return movie

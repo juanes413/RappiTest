@@ -59,4 +59,15 @@ struct MovieItem: Decodable {
         self.title = data.title!
         self.voteAverage = data.voteAverage
     }
+    
+    init?(backdropPath: String, id: Int32, overview: String, posterPath: String, releaseDate: String, title: String, voteAverage: Double) {
+        self.id = id
+        self.backdropPath = backdropPath
+        self.overview = overview
+        self.posterPath = posterPath
+        self.releaseDate = releaseDate
+        self.title = title
+        self.voteAverage = voteAverage
+    }
+    
 }

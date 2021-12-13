@@ -20,24 +20,18 @@ class MainViewController: UIViewController {
     private var contentWidth: CGFloat {
         return (collectionView.bounds.width/2)-17
     }
-
-    private let searchController = UISearchController(searchResultsController: nil)
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     private var typeCategory: TypeCategory = .popular
-    private let databaseManager = DataBaseManager()
+    var databaseManager = DataBaseManager()
     
     private var mValues = [MovieItem]()
     private var mValuesFiltered = [MovieItem]()
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*
-         mValuesFiltered.append(MovieItem(adult: false, backdropPath: "", genreIDS: [], id: 0, originalTitle: "", overview: "", popularity: 0.0, posterPath: "/2jVVDtDaeMxmcvrz2SNyhMcYtWc.jpg", releaseDate: "2021-12-01", title: "Encanto", video: false, voteAverage: 0.0, voteCount: 0))
-         
-         mValuesFiltered.append(MovieItem(adult: false, backdropPath: "", genreIDS: [], id: 0, originalTitle: "", overview: "", popularity: 0.0, posterPath: "/odBUpjZGxY3y7FBo5NBtEYGJf5r.jpg", releaseDate: "2021-12-01", title: "Spiderman no way home", video: false, voteAverage: 0.0, voteCount: 0))
-         
-         */
         self.configureSearchBar()
         self.configureCollectionViewAndTabBar()
         self.loadData()
@@ -45,8 +39,16 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configurateNavigationView()
+    }
+    
+    private func configurateNavigationView() {
         self.navigationController?.navigationBar.barStyle = .default
         self.navigationController?.navigationBar.tintColor = .black
+        
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .always
+        self.navigationItem.largeTitleDisplayMode = .always
     }
     
     private func openDetail(movieItem: MovieItem) {
@@ -87,6 +89,15 @@ extension MainViewController: UITabBarDelegate {
 extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate {
     
     func updateSearchResults(for searchController: UISearchController) {
+       filteredList()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.mValuesFiltered = mValues
+        self.reloadData()
+    }
+    
+    func filteredList() {
         if let searchText = searchController.searchBar.text?.lowercased(), !searchText.isEmpty {
             mValuesFiltered = mValues.filter {
                 item in return (item.title.lowercased().contains(searchText))
@@ -94,11 +105,6 @@ extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate {
         } else {
             mValuesFiltered = mValues
         }
-        self.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.mValuesFiltered = mValues
         self.reloadData()
     }
     
