@@ -1,42 +1,42 @@
 # RappiTest
 
-#Capas de UI o vista
+# Capas de UI o vista
 
-##Main.storyboard
+## Main.storyboard
 Diseño por storyboard
 
 Controllador de resultado de peliculas
-##MainViewController.swift
+## MainViewController.swift
 
 Controlador de detalle de pelicula
-##DetailViewController.swift
+## DetailViewController.swift
 
-#Capa de persistencia (CoreData)
+# Capa de persistencia (CoreData)
 
 Encargada de almacenar en coredata (cache), la informacion de las peliculas descargadas
-##CoreDataUtil.swift
+## CoreDataUtil.swift
 
-#Capa de red
+# Capa de red
 
 Encargado de conectarse el endpoint y descargar la informacion.
-##APIService.swift
+## APIService.swift
 
-#Capa de negocio
+# Capa de negocio
 
 Encarga de gestionar y llamar las otras capas 
-##DataBaseManager.swift
+## DataBaseManager.swift
 
 Capa de datos-modelos
-##Movie+CoreDataProperties.swift
-##Movie+CoreDataClass.swift
-##MovieItem.swift
-##TypeCategory.swift
+## Movie+CoreDataProperties.swift
+## Movie+CoreDataClass.swift
+## MovieItem.swift
+## TypeCategory.swift
 
-#1
+# 1
 La responsabilidad unica es que una funcion, clase u objeto, se encargue de si y solo si realizar una acción o una tarea, 
 logrando con esto la encapsulacion de la funcionalidad. (1 de los principios SOLID).
 
-#2
+# 2
 1. Bien estructurado
 2. Bien documentado
 3. Que cumpla los principios solid.
@@ -45,4 +45,4 @@ logrando con esto la encapsulacion de la funcionalidad. (1 de los principios SOL
 6. Optimizado
 
 
-#Se agrega screenshot de la app y cuenta con la funcionalidad de offline.
+# Se agrega screenshot de la app y cuenta con la funcionalidad de offline.
