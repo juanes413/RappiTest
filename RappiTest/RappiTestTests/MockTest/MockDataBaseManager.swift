@@ -18,9 +18,14 @@ class MockDataBaseManager: DataBaseManager {
     override func saveMovieToDb(typeCategory: TypeCategory, completionBlock : @escaping ()->()) {
         
         var movies = [MovieItem]()
-        movies.append(MovieItem(backdropPath: "", id: 0, overview: "Description", posterPath: "/2jVVDtDaeMxmcvrz2SNyhMcYtWc.jpg", releaseDate: "2021-12-01", title: "Encanto", voteAverage: 5.5)!)
+        if let movie = MovieItem(backdropPath: "", id: 0, overview: "Description", posterPath: "/2jVVDtDaeMxmcvrz2SNyhMcYtWc.jpg", releaseDate: "2021-12-01", title: "Encanto", voteAverage: 5.5) {
+            movies.append(movie)
+        }
         
-        movies.append(MovieItem(backdropPath: "", id: 2, overview: "Description", posterPath: "/odBUpjZGxY3y7FBo5NBtEYGJf5r.jpg", releaseDate: "2021-12-01", title: "Spiderman no way home", voteAverage: 8.5)!)
+        if let movie2 = MovieItem(backdropPath: "", id: 2, overview: "Description", posterPath: "/odBUpjZGxY3y7FBo5NBtEYGJf5r.jpg", releaseDate: "2021-12-01", title: "Spiderman no way home", voteAverage: 8.5) {
+            
+            movies.append(movie2)
+        }
         
         self.deleteMoviesFromDb(typeCategory: typeCategory)
         self.coreDataManager.prepare(typeCategory: typeCategory, dataForSaving: movies)
@@ -55,8 +60,9 @@ class MockDataBaseManager: DataBaseManager {
             let movies: [Movie] = try context.fetch(fetchRequest)
             if movies.count > 0 {
                 for movie in movies {
-                    let viewModel = MovieItem(data: movie)
-                    viewModelArray.append(viewModel!)
+                    if let viewModel = MovieItem(data: movie) {
+                        viewModelArray.append(viewModel)
+                    }
                 }
             }
         } catch {

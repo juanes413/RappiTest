@@ -10,7 +10,7 @@ import XCTest
 
 class DetailViewControllerTests: XCTestCase {
 
-    private var sut: DetailViewController!
+    private var sut: DetailViewController?
     
     private let movie = MovieItem(backdropPath: "", id: 0, overview: "Description", posterPath: "/2jVVDtDaeMxmcvrz2SNyhMcYtWc.jpg", releaseDate: "2021-12-01", title: "Encanto", voteAverage: 5.5)
     
@@ -23,8 +23,8 @@ class DetailViewControllerTests: XCTestCase {
             return
         }
         sut = viewController
-        sut.movieItem = movie
-        sut.loadViewIfNeeded()
+        sut?.movieItem = movie
+        sut?.loadViewIfNeeded()
     }
     
     override func tearDown() {

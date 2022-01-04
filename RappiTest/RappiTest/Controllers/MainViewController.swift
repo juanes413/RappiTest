@@ -77,8 +77,8 @@ extension MainViewController: UITabBarDelegate {
     
     public func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let tab = item.tag
-        if tab != typeCategory.rawValue {
-            self.typeCategory = TypeCategory(rawValue: tab)!
+        if tab != typeCategory.rawValue, let category = TypeCategory(rawValue: tab) {
+            self.typeCategory = category
             self.loadData()
             self.changeTitle()
         }

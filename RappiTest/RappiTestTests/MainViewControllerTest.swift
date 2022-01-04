@@ -10,7 +10,7 @@ import XCTest
 
 class SearchViewControllerTests: XCTestCase {
 
-    private var sut: MainViewController!
+    private var sut: MainViewController?
 
     override func setUp() {
         super.setUp()
@@ -21,23 +21,23 @@ class SearchViewControllerTests: XCTestCase {
             return
         }
         sut = viewController
-        sut.databaseManager = MockDataBaseManager()
-        sut.loadViewIfNeeded()
+        sut?.databaseManager = MockDataBaseManager()
+        sut?.loadViewIfNeeded()
     }
     
     func test_newSearchEmpty() {
-        sut.searchController.searchBar.text = ""
-        sut.filteredList()
+        sut?.searchController.searchBar.text = ""
+        sut?.filteredList()
     }
     
     func test_newSearchNotResult() {
-        sut.searchController.searchBar.text = "No result"
-        sut.filteredList()
+        sut?.searchController.searchBar.text = "No result"
+        sut?.filteredList()
     }
     
     func test_newSearchSuccess() {        
-        sut.searchController.searchBar.text = "test search"
-        sut.filteredList()
+        sut?.searchController.searchBar.text = "test search"
+        sut?.filteredList()
     }
     
     override func tearDown() {

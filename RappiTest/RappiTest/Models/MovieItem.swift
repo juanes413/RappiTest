@@ -52,11 +52,11 @@ struct MovieItem: Decodable {
     
     init?(data: Movie) {
         self.id = data.id
-        self.backdropPath = data.backdropPath!
-        self.overview = data.overview!
-        self.posterPath = data.posterPath!
-        self.releaseDate = data.releaseDate!
-        self.title = data.title!
+        self.backdropPath = data.backdropPath ?? ""
+        self.overview = data.overview ?? ""
+        self.posterPath = data.posterPath ?? ""
+        self.releaseDate = data.releaseDate ?? ""
+        self.title = data.title ?? ""
         self.voteAverage = data.voteAverage
     }
     

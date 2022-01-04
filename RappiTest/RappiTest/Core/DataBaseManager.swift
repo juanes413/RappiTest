@@ -56,8 +56,9 @@ class DataBaseManager: NSObject {
             let movies: [Movie] = try context.fetch(fetchRequest)
             if movies.count > 0 {
                 for movie in movies {
-                    let viewModel = MovieItem(data: movie)
-                    viewModelArray.append(viewModel!)
+                    if let viewModel = MovieItem(data: movie) {
+                        viewModelArray.append(viewModel)
+                    }
                 }
             }
         } catch {
